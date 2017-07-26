@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import { ClientTable } from 'vue-tables-2'
+
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -12,7 +13,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(ClientTable, {
   perPage: 5
-})
+}, false, require('../node_modules/vue-tables-2/compiled/template')('client'))
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
