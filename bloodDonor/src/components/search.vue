@@ -88,6 +88,7 @@
     template: `<button class='btn btn-info' @click='View'>View</button>`,
     methods: {
       View () {
+        this.$emit('show-item', this.data)
         console.log(this.data)
       }
     }
