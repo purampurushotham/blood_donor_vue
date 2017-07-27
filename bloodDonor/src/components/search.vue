@@ -23,40 +23,67 @@
             </div>
           </div>
           <button type="submit" class="btn btn-success btn-lg">Submit</button>
+          <button  class="btn btn-warning btn-lg" @click="rowClick">Post</button>
         </form>
       </div>
     </div>
+    <div>
+      <post-modal :show.sync="post" v-on:show-details="showDetails"></post-modal>
+    </div>
     <hr />
     <div>
-      <v-client-table :data="tableData" :columns="columns" :options= "options" >
-      </v-client-table>
+      <grid class="grid"
+            :data="tableData"
+            :columns="headers"
+            :rowsPerPage="3"
+            @clickRow="rowClick">
+      </grid>
     </div>
+    <h2>{{show}}</h2>
+    <div v-if="show">
+      <show-modal :show.sync="show" :data="rowData" v-on:show-details="showDetails"></show-modal>
+    </div>
+
   </div>
+
 </template>
 <script>
-  import Vue from 'vue'
+  import grid from 'vue2-bootstrap-table'
+  import showModal from './showModal'
+  import postModal from './postModal'
   export default {
+    components: {
+      grid: grid,
+      showModal,
+      postModal
+    },
     data () {
       return {
+        show: false,
+        post: false,
+        rowData: {},
         bloodGroup: '',
         city: '',
         columns: ['firstName', 'lastName', 'bloodGroup', 'city', 'occupation', 'dob', 'martial_status', 'edit'],
-        tableData: window.donors,
-        options: {
-          headings: {
-            firstName: 'First Name',
-            lastName: 'Last Name',
-            bloodGroup: 'Blood Group',
-            city: 'City',
-            occupation: 'Occupation',
-            dob: 'Date Of Birth',
-            martial_status: 'martial status',
-            edit: 'Edit'
-          },
-          templates: {
-            edit: 'show'
+        headers: [
+          {
+            title: 'firstName',
+            path: 'firstName'
+          }, {
+            title: 'bloodGroup',
+            path: 'bloodGroup'
+          }, {
+            title: 'lastName',
+            path: 'lastName'
+          }, {
+            title: 'city',
+            path: 'city'
+          }, {
+            title: 'occupation',
+            path: 'occupation'
           }
-        }
+        ],
+        tableData: window.donors
       }
     },
     created () {
@@ -65,8 +92,16 @@
       console.log('tableData')
     },
     methods: {
-      showItem: function (row) {
-        console.log(row)
+      showDetails: function (show) {
+        this.show = show
+      },
+      rowClick: function (row) {
+        if (row.srcElement.textContent) {
+          this.post = true
+        } else {
+          this.show = true
+          this.rowData = row
+        }
       },
       searchDonor () {
         let searchedDonors = []
@@ -83,14 +118,4 @@
       }
     }
   }
-  Vue.component('show', {
-    props: ['data'],
-    template: `<button class='btn btn-info' @click='View'>View</button>`,
-    methods: {
-      View () {
-        this.$emit('show-item', this.data)
-        console.log(this.data)
-      }
-    }
-  })
 </script>
