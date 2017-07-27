@@ -1,17 +1,40 @@
 <template>
-  <div class="modal-mask" @click="close" v-show="show" transition="modal">
+  <div class="modal-mask" @click="close" v-show="post" transition="modal">
     <div class="modal-container"  @click.stop>
 
       <div class="modal-header">
-        <h3>Donor Contact Information</h3>
+        <h3>Seeker Contact Information</h3>
       </div>
 
       <div class="modal-body">
-        <h3>Personal Details</h3>
+        <form id="myForm" @submit.prevent="postARequest()">
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 ">
+              <div class="form-group row">
+                <label for="bloodGroup" class="col-sm-2 col-form-label col-form-label-lg">Blood Group</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control form-control-lg" id="bloodGroup" placeholder="Blood Group" v-model="bloodGroup">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="Phone" class="col-sm-2 col-form-label col-form-label-lg">Phone</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control form-control-lg" id="s_phone" placeholder="phone number" v-model="s_phone">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="comment" class="col-sm-2 col-form-label col-form-label-lg">Comment</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control form-control-lg" id="comment" placeholder="add comment here" v-model="comment"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success ">Submit</button>
+          <button  class="btn btn-warning " @click="savePost">close</button>
+        </form>
         <div class="modal-footer text-right">
-          <button class="modal-default-button" @click="savePost()">
-            Ok
-          </button>
         </div>
       </div>
     </div>
@@ -19,11 +42,21 @@
 </template>
 <script>
   export default {
-    props: ['show'],
+    props: ['post'],
+    data () {
+      return {
+        bloodGroup: '',
+        s_phone: '',
+        comment: ''
+      }
+    },
     methods: {
       savePost () {
-        this.show = false
-        this.$emit('show-details', this.show)
+        this.post = false
+        this.$emit('show-posts', this.post)
+      },
+      postARequest () {
+
       }
     }
   }
@@ -45,7 +78,7 @@
   }
 
   .modal-container {
-    width: 300px;
+    width: 70%;
     margin: 40px auto 0;
     padding: 20px 30px;
     background-color: #fff;

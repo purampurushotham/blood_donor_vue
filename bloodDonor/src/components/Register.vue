@@ -63,13 +63,13 @@
                   <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label col-form-label-lg">Email</label>
                     <div class="col-sm-10">
-                      <input type="email" class="form-control form-control-lg" id="p_email" placeholder="City" v-model="donor.p_email">
+                      <input type="email" class="form-control form-control-lg" id="p_email" placeholder="email" v-model="donor.p_email">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="phone" class="col-sm-2 col-form-label col-form-label-lg">Phone</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-lg" id="p_phone" placeholder="City" v-model="donor.p_phone">
+                      <input type="text" class="form-control form-control-lg" id="p_phone" placeholder="phone" v-model="donor.p_phone">
                     </div>
                   </div>
                 </div>
@@ -79,13 +79,13 @@
                   <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label col-form-label-lg">Email</label>
                     <div class="col-sm-10">
-                      <input type="email" class="form-control form-control-lg" id="e_email" placeholder="City" v-model="donor.e_email">
+                      <input type="email" class="form-control form-control-lg" id="e_email" placeholder="email" v-model="donor.e_email">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="phone" class="col-sm-2 col-form-label col-form-label-lg">Phone</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-lg" id="e_phone" placeholder="City" v-model="donor.e_phone">
+                      <input type="text" class="form-control form-control-lg" id="e_phone" placeholder="phone" v-model="donor.e_phone">
                     </div>
                   </div>
                 </div>

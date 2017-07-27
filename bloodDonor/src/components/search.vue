@@ -22,13 +22,13 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-success btn-lg">Submit</button>
-          <button  class="btn btn-warning btn-lg" @click="rowClick">Post</button>
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button  class="btn btn-warning" @click="rowClick">Post</button>
         </form>
       </div>
     </div>
-    <div>
-      <post-modal :show.sync="post" v-on:show-details="showDetails"></post-modal>
+    <div v-if="post">
+      <post-modal :post.sync="post" v-on:show-posts="showposts"></post-modal>
     </div>
     <hr />
     <div>
@@ -39,7 +39,6 @@
             @clickRow="rowClick">
       </grid>
     </div>
-    <h2>{{show}}</h2>
     <div v-if="show">
       <show-modal :show.sync="show" :data="rowData" v-on:show-details="showDetails"></show-modal>
     </div>
@@ -67,19 +66,19 @@
         columns: ['firstName', 'lastName', 'bloodGroup', 'city', 'occupation', 'dob', 'martial_status', 'edit'],
         headers: [
           {
-            title: 'firstName',
+            title: 'First Name',
             path: 'firstName'
           }, {
-            title: 'bloodGroup',
+            title: 'Blood Group',
             path: 'bloodGroup'
           }, {
-            title: 'lastName',
+            title: 'Last Name',
             path: 'lastName'
           }, {
-            title: 'city',
+            title: 'City',
             path: 'city'
           }, {
-            title: 'occupation',
+            title: 'Occupation',
             path: 'occupation'
           }
         ],
@@ -93,10 +92,17 @@
     },
     methods: {
       showDetails: function (show) {
+        console.log('show')
+        console.log(show)
+        console.log('show')
         this.show = show
       },
+      showposts: function (posts) {
+        this.post = posts
+      },
       rowClick: function (row) {
-        if (row.srcElement.textContent) {
+        if (row.srcElement && row.srcElement.textContent) {
+          console.log(this.post)
           this.post = true
         } else {
           this.show = true
