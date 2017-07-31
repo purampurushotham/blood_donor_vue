@@ -42,9 +42,11 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="dob" class="col-sm-2 col-form-label col-form-label-lg">DOB</label>
+                <label for="dob" class="col-sm-2 col-form-label col-form-label-lg">Dob</label>
                 <div class="col-sm-10">
-                  <input type="date" class="form-control form-control-lg" id="dob" placeholder="DOB" v-model="donor.dob">
+                  <div class="form-control form-control-lg">
+                    <datepicker  format="d MMM yyyy"placeholder="Date of Birth" v-model="donor.dob"></datepicker>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -94,7 +96,7 @@
           </div>
           <hr />
           <div>
-            <button type="submit" class="btn btn-success btn-lg">Submit</button>
+            <button type="submit"class="btn btn-success btn-lg">Submit</button>
           </div>
 
         </form>
@@ -103,7 +105,13 @@
   </div>
 </template>
 <script>
+  import Datepicker from 'vuejs-datepicker'
+  import moment from 'moment'
+  let donorsList = []
   export default {
+    components: {
+      Datepicker
+    },
     data () {
       return {
         donor: {
@@ -124,8 +132,11 @@
     },
     methods: {
       registerDonor: function () {
-        window.donors.push(this.donor)
-        console.log(window.donors)
+        this.donor.dob = moment(this.donor.dob, 'YYYY-MM-DD').format('DD/MM/YYYY')
+        localStorage.setItem('donors', JSON.stringify(this.donor))
+        donorsList.push(JSON.parse(localStorage.getItem('donors')))
+        localStorage.setItem('donors', JSON.stringify(donorsList))
+        console.log(localStorage.donors)
       }
     }
   }
