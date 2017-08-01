@@ -115,6 +115,7 @@
     data () {
       return {
         donor: {
+          id: '',
           firstName: '',
           lastName: '',
           occupation: '',
@@ -125,13 +126,25 @@
           p_phone: '',
           p_email: '',
           e_email: '',
-          e_phone: ''
+          e_phone: '',
+          recentDonor: {
+            recentDonorTime: '',
+            reachedTime: '',
+            exists: false
+          }
 
         }
       }
     },
+    created () {
+      console.log('dsfsdfs')
+      donorsList = (JSON.parse(localStorage.getItem('donors')))
+      console.log(JSON.parse(localStorage.getItem('donors')))
+      console.log('dsfsdfs')
+    },
     methods: {
       registerDonor: function () {
+        this.donor.id = Date.now()
         this.donor.dob = moment(this.donor.dob, 'YYYY-MM-DD').format('DD/MM/YYYY')
         localStorage.setItem('donors', JSON.stringify(this.donor))
         donorsList.push(JSON.parse(localStorage.getItem('donors')))

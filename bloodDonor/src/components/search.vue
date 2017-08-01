@@ -55,11 +55,13 @@
 
 </template>
 <script>
+  import moment from 'moment'
   import grid from 'vue2-bootstrap-table'
   import showModal from './showModal'
   import { ModelSelect } from 'vue-search-select'
   import postModal from './postModal'
   import postRequests from './postRequests'
+  let searchedResults = []
   export default {
     data () {
       return {
@@ -93,21 +95,29 @@
             path: 'occupation'
           }
         ],
-        tableData: JSON.parse(localStorage.getItem('donors'))
+        tableData: searchedResults
       }
     },
     created () {
       console.log('creeated')
+      console.log('search')
+      console.log(JSON.parse(localStorage.getItem('donors')))
+      console.log('search')
+      this.checkRecentDonor()
       let some = JSON.parse(localStorage.getItem('donors'))
-      console.log(some)
       some.map((eachBloodDonor, key) => {
+        console.log('some')
+        console.log(eachBloodDonor)
+        console.log('some')
         this.bloodGroup_options.push({value: eachBloodDonor.bloodGroup, text: eachBloodDonor.bloodGroup})
         this.city_options.push({value: eachBloodDonor.city, text: eachBloodDonor.city})
       })
     },
     methods: {
-      showDetails: function (show) {
-        this.show = show
+      showDetails: function (data) {
+        console.log(data)
+        this.show = data.show
+        this.checkRecentDonor()
       },
       showposts: function (posts) {
         console.log('show posts')
@@ -115,9 +125,11 @@
         this.posts = JSON.parse(localStorage.getItem('postsRequests'))
         console.log(this.posts)
         this.post = posts
+        this.checkRecentDonor()
       },
       rowClick: function (row) {
-        console.log(this)
+        console.log('rpw clic')
+        console.log(row)
         if (row.srcElement && row.srcElement.textContent) {
           console.log(this.post)
           this.post = true
@@ -129,16 +141,46 @@
       searchDonor () {
         console.log('seatrch donors')
         let searchedDonors = []
-        JSON.parse(localStorage.getItem('donors')).map((object, index) => {
-          if (object.bloodGroup === this.bloodGroup || object.city === this.city) {
+        searchedResults.map((object, index) => {
+          if ((object.bloodGroup === this.bloodGroup || object.city === this.city) && (!object.recentDonor)) {
             searchedDonors.push(object)
           }
         })
         if (this.bloodGroup === '' && this.city === '') {
-          this.tableData = JSON.parse(localStorage.getItem('donors'))
+          this.tableData = searchedResults
         } else {
           this.tableData = searchedDonors
         }
+      },
+      checkRecentDonor () {
+        console.log('checkDonor in search')
+        searchedResults = []
+        JSON.parse(localStorage.getItem('donors')).map((eachBloodDonor, key) => {
+          console.log('eachObject')
+          console.log(eachBloodDonor)
+          console.log('eachObject')
+          console.log(moment(new Date(), 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss'), eachBloodDonor.recentDonor.reachedTime)
+          if (eachBloodDonor.recentDonor.exists) {
+            console.log('first Loop')
+            if (moment(new Date(), 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss') > eachBloodDonor.recentDonor.reachedTime) {
+              eachBloodDonor.recentDonor = {exists: false, recentDonorTime: '', reachedTime: ''}
+              console.log('second Loop')
+              searchedResults.push(eachBloodDonor)
+              console.log('reacted after 20 seconds')
+              console.log(searchedResults)
+            } else {
+              console.log('first else block')
+            }
+          } else {
+            console.log('else')
+            searchedResults.push(eachBloodDonor)
+          }
+        })
+        console.log('after mapp')
+        console.log(searchedResults)
+        console.log('after mapp')
+        this.tableData = searchedResults
+        console.log('created')
       }
     },
     components: {

@@ -40,7 +40,7 @@
       }
     },
     created () {
-      console.log('crreayed')
+      console.log('creayed')
       console.log(this)
     },
     methods: {
