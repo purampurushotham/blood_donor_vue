@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Register from '../components/Register'
 import Search from '../components/search'
+import login from '../components/login'
 Vue.use(Router)
 
 export default new Router({
@@ -19,6 +20,10 @@ export default new Router({
     {
       path: '/search',
       component: Search
+    },
+    {
+      path: '/login',
+      component: login
     }
   ]
 })

@@ -155,7 +155,8 @@
       checkRecentDonor () {
         console.log('checkDonor in search')
         searchedResults = []
-        JSON.parse(localStorage.getItem('donors')).map((eachBloodDonor, key) => {
+        let some = JSON.parse(localStorage.getItem('donors'))
+        some.map((eachBloodDonor, key) => {
           console.log('eachObject')
           console.log(eachBloodDonor)
           console.log('eachObject')

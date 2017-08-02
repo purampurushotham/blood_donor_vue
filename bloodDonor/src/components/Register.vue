@@ -138,7 +138,9 @@
     },
     created () {
       console.log('dsfsdfs')
-      donorsList = (JSON.parse(localStorage.getItem('donors')))
+      if (localStorage.getItem('donors') != null) {
+        donorsList = donorsList.concat(JSON.parse(localStorage.getItem('donors')))
+      }
       console.log(JSON.parse(localStorage.getItem('donors')))
       console.log('dsfsdfs')
     },
