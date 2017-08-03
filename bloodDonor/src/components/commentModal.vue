@@ -1,12 +1,11 @@
 <template>
   <div class="modal-mask" @click="close" v-show="comm" transition="modal">
     <div class="modal-container"  @click.stop>
-
       <div class="modal-header">
         <h3>Add Comments</h3>
       </div>
       <div class="modal-body">
-        <form id="myForm">
+        <form id="myForm" @submit.prevent>
           <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6 ">
@@ -21,8 +20,6 @@
             </div>
           </div>
         </form>
-      </div>
-      <div class="modal-footer text-right">
       </div>
     </div>
   </div>
@@ -40,19 +37,17 @@
       }
     },
     created () {
-      console.log('creayed')
-      console.log(this)
+      console.log('creayed comment modal')
     },
     methods: {
       addComment: function () {
-        console.log('add')
-        JSON.parse(localStorage.getItem('postsRequests')).map((eachObject, index) => {
+        console.log('add comment')
+        this.getter('postsRequests').map((eachObject, index) => {
           if (this.postId === eachObject.id) {
-            console.log(this.postId, eachObject.id)
-            localStorage.setItem('comments', JSON.stringify(this.comment))
-            console.log(eachObject)
-            console.log(commentList)
-            console.log(commentList.length)
+            this.setter('comments', this.comment)
+            // localStorage.setItem('comments', JSON.stringify(this.comment))
+            console.log('add comments in comment modal')
+            console.log(commentList.length, index)
             if (!commentList[index]) {
               commentList.push({id: '', comments: []})
               console.log('each')
@@ -61,11 +56,14 @@
             }
             if (commentList[index].id === '') {
               commentList[index].id = this.postId
-              commentList[index].comments.push(JSON.parse(localStorage.getItem('comments')))
+              console.log('setting comment list array id is empty')
+              commentList[index].comments.push(this.getter('comments'))
             } else if (commentList[index].id === this.postId) {
-              commentList[index].comments.push(JSON.parse(localStorage.getItem('comments')))
+              console.log('setting comment list array id isnoot empty')
+              commentList[index].comments.push(this.getter('comments'))
             }
-            localStorage.setItem('comments', JSON.stringify(commentList))
+            console.log(commentList[index].id)
+            this.setter('comments', commentList)
           }
         })
         this.close()

@@ -28,13 +28,10 @@
               </div>
             </div>
           </div>
-          <button  @click="searchDonor()" class="btn btn-success">Submit</button>
-          <button  class="btn btn-warning" @click="rowClick">Post</button>
+          <button  @click="searchDonor()" class="btn btn-success">Search</button>
+          <button type="reset" class="btn btn-warning">Reset</button>
         </form>
       </div>
-    </div>
-    <div v-if="post">
-      <post-modal :post.sync="post" v-on:show-posts="showposts"></post-modal>
     </div>
     <hr />
     <div>
@@ -48,9 +45,6 @@
     <div v-if="show">
       <show-modal :show.sync="show" :data="rowData" v-on:show-details="showDetails"></show-modal>
     </div>
-    <div  >
-      <post-requests :postsData="posts"></post-requests>
-    </div>
   </div>
 
 </template>
@@ -59,9 +53,8 @@
   import grid from 'vue2-bootstrap-table'
   import showModal from './showModal'
   import { ModelSelect } from 'vue-search-select'
-  import postModal from './postModal'
-  import postRequests from './postRequests'
-  let searchedResults = []
+  import donorsData from '../donorsData'
+  let searchedResults = donorsData.donors
   export default {
     data () {
       return {
@@ -90,9 +83,6 @@
           }, {
             title: 'City',
             path: 'city'
-          }, {
-            title: 'Occupation',
-            path: 'occupation'
           }
         ],
         tableData: searchedResults
@@ -100,49 +90,40 @@
     },
     created () {
       console.log('creeated')
-      console.log('search')
-      console.log(JSON.parse(localStorage.getItem('donors')))
-      console.log('search')
       this.checkRecentDonor()
-      let some = JSON.parse(localStorage.getItem('donors'))
-      some.map((eachBloodDonor, key) => {
-        console.log('some')
-        console.log(eachBloodDonor)
-        console.log('some')
+      let options = []
+      options = this.getter('donors')
+      options.map((eachBloodDonor, key) => {
+        console.log('oprtiosn')
+        console.log(eachBloodDonor.recentDonor)
+        console.log('oprtions')
         this.bloodGroup_options.push({value: eachBloodDonor.bloodGroup, text: eachBloodDonor.bloodGroup})
         this.city_options.push({value: eachBloodDonor.city, text: eachBloodDonor.city})
       })
     },
     methods: {
       showDetails: function (data) {
+        console.log('show details')
         console.log(data)
         this.show = data.show
         this.checkRecentDonor()
-      },
-      showposts: function (posts) {
-        console.log('show posts')
-        console.log(JSON.parse(localStorage.getItem('postsRequests')))
-        this.posts = JSON.parse(localStorage.getItem('postsRequests'))
-        console.log(this.posts)
-        this.post = posts
-        this.checkRecentDonor()
+        console.log('show details')
       },
       rowClick: function (row) {
-        console.log('rpw clic')
-        console.log(row)
-        if (row.srcElement && row.srcElement.textContent) {
-          console.log(this.post)
-          this.post = true
-        } else {
-          this.show = true
-          this.rowData = row
-        }
+        this.show = true
+        this.rowData = row
       },
       searchDonor () {
         console.log('seatrch donors')
         let searchedDonors = []
         searchedResults.map((object, index) => {
-          if ((object.bloodGroup === this.bloodGroup || object.city === this.city) && (!object.recentDonor)) {
+          console.log(object.recentDonor.exists)
+          if ((object.bloodGroup === this.bloodGroup && object.city === this.city) && (!object.recentDonor.exists)) {
+            searchedDonors.push(object)
+            console.log(searchedDonors)
+          } else if ((object.bloodGroup === this.bloodGroup && this.city === '')) {
+            searchedDonors.push(object)
+          } else if ((object.bloodGroup === '' && this.city === object.city)) {
             searchedDonors.push(object)
           }
         })
@@ -155,10 +136,9 @@
       checkRecentDonor () {
         console.log('checkDonor in search')
         searchedResults = []
-        let some = JSON.parse(localStorage.getItem('donors'))
-        some.map((eachBloodDonor, key) => {
+        this.getter('donors').map((eachBloodDonor, key) => {
           console.log('eachObject')
-          console.log(eachBloodDonor)
+          console.log(eachBloodDonor.recentDonor)
           console.log('eachObject')
           console.log(moment(new Date(), 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss'), eachBloodDonor.recentDonor.reachedTime)
           if (eachBloodDonor.recentDonor.exists) {
@@ -187,9 +167,7 @@
     components: {
       grid: grid,
       showModal,
-      postModal,
-      ModelSelect,
-      postRequests
+      ModelSelect
     }
   }
 </script>

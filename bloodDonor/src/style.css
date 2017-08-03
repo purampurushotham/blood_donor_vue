@@ -64,10 +64,13 @@
   transform: scale(1.1);
 }
 .navbar {
-  padding : 1%;
+  padding : 0.5%;
   width: 100%;
   margin-top: -4.5%;
   z-index: 5;
   position: fixed;
+}
+.post-request {
+  margin-right: -55%;
 }
 

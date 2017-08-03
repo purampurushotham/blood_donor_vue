@@ -4,6 +4,7 @@ import Hello from '@/components/Hello'
 import Register from '../components/Register'
 import Search from '../components/search'
 import login from '../components/login'
+import Posts from '../components/Post'
 Vue.use(Router)
 
 export default new Router({
@@ -24,6 +25,10 @@ export default new Router({
     {
       path: '/login',
       component: login
+    },
+    {
+      path: '/posts',
+      component: Posts
     }
   ]
 })

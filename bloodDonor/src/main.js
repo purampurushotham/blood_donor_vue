@@ -8,6 +8,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Datepicker from 'vuejs-datepicker'
 import './style.css'
+import donorsData from './donorsData'
+import { myMixin } from './components/mixins'
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(Datepicker)
@@ -19,5 +21,21 @@ new Vue({
     donors: []
   },
   template: '<App/>',
-  components: { App }
+  components: { App },
+  created () {
+    if (this.getter('donors') === null) {
+      localStorage.setItem('donors', JSON.stringify(donorsData.donors))
+    }
+    if (this.getter('postsRequests') === null) {
+      localStorage.setItem('postsRequests', JSON.stringify(donorsData.posts))
+    }
+  /*  if (this.getter('comments') === null) {
+      localStorage.setItem('comments', JSON.stringify(donorsData.comments_data))
+    } */
+    console.log('app')
+    console.log(localStorage.getItem('postsRequests'))
+    console.log('app')
+  },
+  mixins: [myMixin]
 })
+

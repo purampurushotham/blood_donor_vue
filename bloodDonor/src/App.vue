@@ -5,13 +5,17 @@
         <span>Blood Donor</span>
       </b-link>
       <b-nav is-nav-bar>
-        <b-nav-item v-if = 'logged'><router-link to="/search" class="nav-link" activeClass="active" exact>Search</router-link></b-nav-item>
-        <b-nav-item v-if = 'logged'><router-link to="/register" class="nav-link" activeClass="active" exact>Register</router-link></b-nav-item>
+        <b-nav-item ><router-link to="/search" class="nav-link" activeClass="active" exact>Search</router-link></b-nav-item>
+        <b-nav-item ><router-link to="/register" class="nav-link" activeClass="active" exact>Register</router-link></b-nav-item>
+        <b-nav-item ><router-link to="/posts" class="nav-link" activeClass="active" exact>Post A Request</router-link></b-nav-item>
         <b-nav-item v-if = 'logged'><router-link to="/" class="nav-link" activeClass="active" @click.native="logout"exact>Logout</router-link></b-nav-item>
-        <b-nav-item v-if = '!logged'><router-link to="/login" class="nav-link" activeClass="active" exact>Login</router-link></b-nav-item>
+        <b-nav-item  v-if = '!logged'><router-link to="/login" class="login nav-link" activeClass="active" exact>Login</router-link></b-nav-item>
       </b-nav>
     </b-navbar>
-    <router-view></router-view>
+    <div class="donor-app">
+      <br>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

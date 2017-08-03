@@ -1,35 +1,89 @@
 <template>
   <div>
-    <div class="panel panel-success">
-      <h3 class="panel-heading">Blood Seekers</h3>
+    <div class="panel panel-primary">
+      <h3 class="panel-heading">Posts</h3>
       <div class="panel-body">
-        <div class="panel panel-primary">
-          <h4 class="panel-heading"> Posts
-          </h4>
-          <div class="panel-body">
-            <div class="list-group"  v-for="post in postsData">
-              <div href="#" class="list-group-item">
-                <h3 class="list-group-item-heading">Blood Seeker Info</h3>
-                <button class="btn btn-warning glyphicon-align-right glyphicon-comment" @click="addComment(post.id)">Comment</button>
-                <div  class="row list-group-item-text">
-                  <h4 class="list-group-item-text"><span class="text-primary strong"> Blood Group : </span>{{post.bloodGroup}}</h4>
-                  <h4 class="list-group-item-text"><span class="text-danger strong"> Phone: {{post.s_phone}}</span></h4>
-                  <div v-if="!comm"v-for = "comment in comments" >
-                    <div v-if='post.id === comment.id'>
-                      <h4>Comments: </h4>
-                      <h5  v-for = "c in comment.comments" class="list-group-item-text"><span>{{c}}</span></h5>
+        <div v-for="post in postsData">
+          <div class="container-fluid ">
+            <div class="row panel panel-success">
+              <div class="col-md-12 panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label>First Name</label>
+                      </div>
+                      <div class="col-sm-6">
+                        {{post.firstName}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label>Blood Group</label>
+                      </div>
+                      <div class="col-sm-6">
+                        {{post.bloodGroup}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label>Date Of Birth</label>
+                      </div>
+                      <div class="col-sm-6">
+                        {{post.dob}}
+                      </div>
                     </div>
                   </div>
-                  <!-- <p class="list-group-item-text"><span class="text-warning strong">Comment: {{post.comment}}</span></p>-->
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label>Last Name</label>
+                      </div>
+                      <div class="col-sm-6">
+                        {{post.lastName}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label>City</label>
+                      </div>
+                      <div class="col-sm-6">
+                        {{post.city}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label>phone</label>
+                      </div>
+                      <div class="col-sm-6">
+                        {{post.p_phone}}
+                      </div>
+                    </div>
+                    <button class="btn btn-warning pull-right" @click="addComment(post.id)">Add   Comment</button>
+                  </div>
                 </div>
-              </div>
-              <div v-if="comm">
-                <p>{{comm}}</p>
-                <comment-modal :comm.sync="comm" :postId="post_id" v-on:show-comments="showComments"></comment-modal>
+                <div class="row">
+                  <div class="col-md-1">
+                    <h4>Comments: </h4>
+                  </div>
+                </div>
+                <div v-for = "comment in comments" >
+                  <div class="panel "v-if='post.id === comment.id'>
+                    <div class="row  panel-primary well-sm" v-for = "obj in comment.comments">
+                      <div class="col-md-12 ">
+                        {{obj}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div v-if="comm">
+        <p>{{comm}}</p>
+        <comment-modal :comm.sync="comm" :postId="post_id" v-on:show-comments="showComments"></comment-modal>
       </div>
     </div>
   </div>
@@ -45,15 +99,19 @@
       return {
         comm: false,
         post_id: '',
-        comments: JSON.parse(localStorage.getItem('comments'))
+        comments: []
       }
+    },
+    created () {
+      console.log('cretaef in post requests')
+      console.log(this.comments)
     },
     methods: {
       addComment: function (id) {
-        console.log('add')
-        console.log(this)
-        console.log('add')
         this.post_id = id
+        console.log('addComment')
+        console.log(this.post_id)
+        console.log('addComment')
         this.comm = true
       },
       showComments: function (comm) {

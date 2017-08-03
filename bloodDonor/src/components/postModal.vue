@@ -6,26 +6,43 @@
       </div>
 
       <div class="modal-body">
-        <form id="myForm">
+        <form id="myForm" @submit.prevent>
           <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6 ">
+            <div class="col-md-12 ">
               <div class="form-group row">
-                <label for="bloodGroup" class="col-sm-2 col-form-label col-form-label-lg">Blood Group</label>
-                <div class="col-sm-10">
+                <label for="firstName" class="col-md-4 col-form-label">First Name</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control form-control-lg" id="firstName" placeholder="First Name" v-model="postRequest.firstName">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="lastName" class="col-md-4 col-form-label col-form-label-lg">Last Name</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control form-control-lg" id="lastName" placeholder="lastName" v-model="postRequest.lastName">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="dob" class="col-md-4 col-form-label col-form-label-lg">Date Of Birth</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control form-control-lg" id="dob" placeholder="Date Of Birth" v-model="postRequest.dob">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="bloodGroup" class="col-md-4 col-form-label col-form-label-lg">Blood Group</label>
+                <div class="col-md-6">
                   <input type="text" class="form-control form-control-lg" id="bloodGroup" placeholder="Blood Group" v-model="postRequest.bloodGroup">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="Phone" class="col-sm-2 col-form-label col-form-label-lg">Phone</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control form-control-lg" id="s_phone" placeholder="phone number" v-model="postRequest.s_phone">
+                <label for="city" class="col-md-4 col-form-label col-form-label-lg">City</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control form-control-lg" id="city" placeholder="City" v-model="postRequest.city">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="comment" class="col-sm-2 col-form-label col-form-label-lg">Comment</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control form-control-lg" id="comment" placeholder="add comment here" v-model="postRequest.comment"></textarea>
+                <label for="P_Phone" class="col-md-4 col-form-label col-form-label-lg">Phone</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control form-control-lg" id="p_phone" placeholder="phone number" v-model="postRequest.p_phone">
                 </div>
               </div>
             </div>
@@ -46,14 +63,28 @@
     data () {
       return {
         postRequest: {
-          id: '',
+          id: Date.now(),
+          firstName: '',
+          lastName: '',
+          occupation: '',
           bloodGroup: '',
-          s_phone: ''
+          city: '',
+          dob: '',
+          martial_status: '',
+          p_phone: '',
+          p_email: '',
+          e_email: '',
+          e_phone: ''
         }
       }
     },
     created () {
-      console.log(this)
+      if (this.getter('postsRequests') != null) {
+        postsList = postsList.concat(this.getter('postsRequests'))
+      }
+    },
+    destroyed () {
+      postsList = []
     },
     methods: {
       close () {
@@ -61,22 +92,12 @@
         this.$emit('show-posts', this.post)
       },
       postARequest () {
-        localStorage.counter = Math.random()
-        this.postRequest.id = localStorage.counter
-        localStorage.setItem('postsRequests', JSON.stringify(this.postRequest))
-        postsList.push(JSON.parse(localStorage.getItem('postsRequests')))
-        localStorage.setItem('postsRequests', JSON.stringify(postsList))
-        /*
-
-         console.log(localStorage.hasOwnProperty('postsRequests'))
-
-         localStorage.setItem('postsRequests', JSON.stringify(this.postRequest))
-         postsList.push(JSON.parse(localStorage.getItem('postsRequests')))
-         localStorage.setItem('postsRequests', JSON.stringify(postsList))
-         console.log('m,gjkdgsjkhgjkd')
-         console.log(localStorage.postsRequests)
-         console.log('m,gjkdgsjkhgjkd')
-         */
+        console.log('this.post A request')
+        console.log(this.postRequest)
+        this.setter('postsRequests', this.postRequest)
+        postsList.push(this.getter('postsRequests'))
+        this.setter('postsRequests', postsList)
+        console.log(this.getter('postsRequests'))
         this.close()
       }
     }

@@ -132,25 +132,26 @@
             reachedTime: '',
             exists: false
           }
-
         }
       }
     },
     created () {
-      console.log('dsfsdfs')
-      if (localStorage.getItem('donors') != null) {
-        donorsList = donorsList.concat(JSON.parse(localStorage.getItem('donors')))
+      console.log('created')
+      if (this.getter('donors') != null) {
+        donorsList = donorsList.concat(this.getter('donors'))
       }
-      console.log(JSON.parse(localStorage.getItem('donors')))
-      console.log('dsfsdfs')
+      console.log(donorsList)
+    },
+    destroyed () {
+      donorsList = []
     },
     methods: {
       registerDonor: function () {
         this.donor.id = Date.now()
         this.donor.dob = moment(this.donor.dob, 'YYYY-MM-DD').format('DD/MM/YYYY')
-        localStorage.setItem('donors', JSON.stringify(this.donor))
-        donorsList.push(JSON.parse(localStorage.getItem('donors')))
-        localStorage.setItem('donors', JSON.stringify(donorsList))
+        this.setter('donors', this.donor)
+        donorsList.push(this.getter('donors'))
+        this.setter('donors', donorsList)
         console.log(localStorage.donors)
       }
     }

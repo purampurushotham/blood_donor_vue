@@ -4,24 +4,22 @@
       <div class="modal-header">
         <h3>Donor Contact Information</h3>
       </div>
-
       <div class="modal-body">
         <h3>Personal Details</h3>
         <p>Email : <span>{{data.p_email}}</span></p>
         <p>Phone: <span>{{data.p_phone}}</span></p>
+        <h3>Emergency Details</h3>
+        <p>Email : <span>{{data.e_email}}</span></p>
+        <p>Phone: <span>{{data.e_phone}}</span></p>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" v-model="data.recentDonor.exists" v-on:change="recentDonor($event.target)"> Mark as Recent Donor
+          </label>
+        </div>
       </div>
-      <h3>Emergency Details</h3>
-      <p>Email : <span>{{data.e_email}}</span></p>
-      <p>Phone: <span>{{data.e_phone}}</span></p>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" v-model="data.recentDonor.exists" v-on:change="recentDonor($event.target)"> Mark as Recent Donor
-        </label>
-      </div>
-      <div class="modal-footer text-right">
-        <button class="modal-default-button" @click="savePost()">
-          Ok
-        </button>
+      <div>
+        <button class="btn btn-primary"  @click="savePost()">Ok</button>
+        <button class="btn btn-danger"  @click="close()">cancel</button>
       </div>
     </div>
   </div>
@@ -46,7 +44,10 @@
         console.log('savePost')
         this.show = false
         if (this.data.recentDonor.exists) {
-          JSON.parse(localStorage.getItem('donors')).map((object, index) => {
+          this.getter('donors').map((object, index) => {
+            console.log('show Modal')
+            console.log(object.id, this.data.id)
+            console.log('show Modal')
             if (object.id === this.data.id) {
               object.recentDonor.exists = this.data.recentDonor.exists
               this.data.recentDonor.recentDonorTime = moment(new Date(), 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss')
@@ -68,7 +69,7 @@
       },
       checkDonorStatus: function (data) {
         let donorsStatus = []
-        donorsStatus = donorsStatus.concat(JSON.parse(localStorage.getItem('donors')))
+        donorsStatus = donorsStatus.concat(this.getter('donors'))
         console.log('before donor')
         console.log(donorsStatus.length)
         console.log('before donor')
@@ -82,10 +83,12 @@
         console.log('donorsStatus')
         console.log(donorsStatus)
         console.log('donorsStatus')
-        localStorage.setItem('donors', JSON.stringify(donorsStatus))
-        console.log('JSON.parse(localStor')
-        console.log(JSON.parse(localStorage.getItem('donors')))
-        console.log('JSON.parse(localStor')
+        this.setter('donors', donorsStatus)
+        // localStorage.setItem('donors', JSON.stringify(donorsStatus))
+        /* console.log('JSON.parse(localStor')
+         console.log(JSON.parse(localStorage.getItem('donors')))
+         console.log('JSON.parse(localStor')
+         */
       }
     }
   }
