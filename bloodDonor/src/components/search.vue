@@ -11,25 +11,23 @@
               <div class="form-group row">
                 <label for="bloodGroup" class="col-sm-2 col-form-label col-form-label-lg">Blood Group</label>
                 <div class="col-sm-10">
-                  <model-select :options="bloodGroup_options"
-                                v-model="bloodGroup"
-                                placeholder="select item2">
-                  </model-select>
+                  <multiselect v-model="bloodGroup" :options="bloodGroup_options"
+                               :options-limit = "2"
+                               :limit="1"></multiselect>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="city" class="col-sm-2 col-form-label col-form-label-lg">City</label>
                 <div class="col-sm-10">
-                  <model-select :options="city_options"
-                                v-model="city"
-                                placeholder="select item2">
-                  </model-select>
+                  <multiselect v-model="city" :options="city_options"
+                               :options-limit = "2"
+                               :limit="1"></multiselect>
                 </div>
               </div>
             </div>
           </div>
           <button  @click="searchDonor()" class="btn btn-success">Search</button>
-          <button type="reset" class="btn btn-warning">Reset</button>
+          <button @click="reset" class="btn btn-warning">Reset</button>
         </form>
       </div>
     </div>
@@ -54,6 +52,7 @@
   import showModal from './showModal'
   import { ModelSelect } from 'vue-search-select'
   import donorsData from '../donorsData'
+  import Multiselect from 'vue-multiselect'
   let searchedResults = donorsData.donors
   export default {
     data () {
@@ -64,7 +63,7 @@
         bloodGroup_options: [],
         city_options: [],
         rowData: {},
-        bloodGroup: ' ',
+        bloodGroup: '',
         city: '',
         columns: ['firstName', 'lastName', 'bloodGroup', 'city', 'occupation', 'dob', 'martial_status', 'edit'],
         headers: [
@@ -95,10 +94,15 @@
       options = this.getter('donors')
       options.map((eachBloodDonor, key) => {
         console.log('oprtiosn')
-        console.log(eachBloodDonor.recentDonor)
-        console.log('oprtions')
-        this.bloodGroup_options.push({value: eachBloodDonor.bloodGroup, text: eachBloodDonor.bloodGroup})
-        this.city_options.push({value: eachBloodDonor.city, text: eachBloodDonor.city})
+        if (!this.bloodGroup_options.includes(eachBloodDonor.bloodGroup)) {
+          console.log(typeof eachBloodDonor.bloodGroup)
+          console.log(this.bloodGroup_options.indexOf('o+ve'))
+          this.bloodGroup_options.push(eachBloodDonor.bloodGroup)
+          console.log('oprtions')
+        }
+        if (!this.city_options.includes(eachBloodDonor.city)) {
+          this.city_options.push(eachBloodDonor.city)
+        }
       })
     },
     methods: {
@@ -108,6 +112,10 @@
         this.show = data.show
         this.checkRecentDonor()
         console.log('show details')
+      },
+      reset () {
+        this.bloodGroup = ''
+        this.city = ''
       },
       rowClick: function (row) {
         this.show = true
@@ -167,7 +175,9 @@
     components: {
       grid: grid,
       showModal,
-      ModelSelect
+      ModelSelect,
+      Multiselect
     }
   }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

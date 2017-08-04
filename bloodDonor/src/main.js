@@ -29,9 +29,9 @@ new Vue({
     if (this.getter('postsRequests') === null) {
       localStorage.setItem('postsRequests', JSON.stringify(donorsData.posts))
     }
-  /*  if (this.getter('comments') === null) {
-      localStorage.setItem('comments', JSON.stringify(donorsData.comments_data))
-    } */
+    /*  if (this.getter('comments') === null) {
+     localStorage.setItem('comments', JSON.stringify(donorsData.comments_data))
+     } */
     console.log('app')
     console.log(localStorage.getItem('postsRequests'))
     console.log('app')

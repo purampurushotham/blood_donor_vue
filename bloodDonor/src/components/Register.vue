@@ -5,7 +5,7 @@
       <div class="col-md-12 card-block">
         <h1 class="card-title"> Register Donor </h1>
         <hr />
-        <form id="myForm" @submit.prevent="registerDonor()">
+        <form id="myForm" @submit="registerDonor()">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group row">
@@ -41,12 +41,10 @@
                   <input type="text" class="form-control form-control-lg" id="lastName" placeholder="Last Name" v-model="donor.lastName">
                 </div>
               </div>
-              <div class="form-group row">
-                <label for="dob" class="col-sm-2 col-form-label col-form-label-lg">Dob</label>
+              <div class="form-group dd row">
+                <label for="dob" class="col-sm-2 col-form-label col-form-label-lg">Date Of Birth</label>
                 <div class="col-sm-10">
-                  <div class="form-control form-control-lg">
-                    <datepicker  format="d MMM yyyy"placeholder="Date of Birth" v-model="donor.dob"></datepicker>
-                  </div>
+                  <datepicker class="datepicker" format="d MMM yyyy"placeholder="Date of Birth" v-model="donor.dob"></datepicker>
                 </div>
               </div>
               <div class="form-group row">
@@ -106,6 +104,7 @@
 </template>
 <script>
   import Datepicker from 'vuejs-datepicker'
+  import router from '../router'
   import moment from 'moment'
   let donorsList = []
   export default {
@@ -153,6 +152,7 @@
         donorsList.push(this.getter('donors'))
         this.setter('donors', donorsList)
         console.log(localStorage.donors)
+        router.push('/search')
       }
     }
   }

@@ -21,12 +21,12 @@
                   <input type="text" class="form-control form-control-lg" id="lastName" placeholder="lastName" v-model="postRequest.lastName">
                 </div>
               </div>
-              <div class="form-group row">
+             <!-- <div class="form-group row">
                 <label for="dob" class="col-md-4 col-form-label col-form-label-lg">Date Of Birth</label>
                 <div class="col-md-6">
                   <input type="text" class="form-control form-control-lg" id="dob" placeholder="Date Of Birth" v-model="postRequest.dob">
                 </div>
-              </div>
+              </div> -->
               <div class="form-group row">
                 <label for="bloodGroup" class="col-md-4 col-form-label col-form-label-lg">Blood Group</label>
                 <div class="col-md-6">

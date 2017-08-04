@@ -25,12 +25,20 @@
                         {{post.bloodGroup}}
                       </div>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                       <div class="col-sm-4">
                         <label>Date Of Birth</label>
                       </div>
                       <div class="col-sm-6">
                         {{post.dob}}
+                      </div>
+                    </div>-->
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label>phone</label>
+                      </div>
+                      <div class="col-sm-6">
+                        {{post.p_phone}}
                       </div>
                     </div>
                   </div>
@@ -49,14 +57,6 @@
                       </div>
                       <div class="col-sm-6">
                         {{post.city}}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <label>phone</label>
-                      </div>
-                      <div class="col-sm-6">
-                        {{post.p_phone}}
                       </div>
                     </div>
                     <button class="btn btn-warning pull-right" @click="addComment(post.id)">Add   Comment</button>
