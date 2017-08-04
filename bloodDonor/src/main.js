@@ -3,16 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import Datepicker from 'vuejs-datepicker'
 import './style.css'
 import donorsData from './donorsData'
 import { myMixin } from './components/mixins'
 Vue.config.productionTip = false
-Vue.use(BootstrapVue)
-Vue.use(Datepicker)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

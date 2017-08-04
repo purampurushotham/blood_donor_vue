@@ -169,13 +169,10 @@
   margin-top: -5%;
   padding-top: 0%;
 }
-.datepicker{
+.date-picker{
+  background: cyan;
+
+}
+.date-of-birth {
   background-color: white;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  width: 250%;
-  border-width: 2px;
-  min-height: 40px;
-  height: auto;
-  color: #df6c12;
 }
