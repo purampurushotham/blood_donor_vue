@@ -3,19 +3,23 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import SimpleVueValidation from 'simple-vue-validator'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './style.css'
 import donorsData from './donorsData'
 import { myMixin } from './components/mixins'
+Vue.use(SimpleVueValidation)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
+let Validator = SimpleVueValidation.Validator
 new Vue({
   el: '#app',
   router,
   localStorage: {
     donors: []
   },
+  Validator: Validator,
   template: '<App/>',
   components: { App },
   created () {
