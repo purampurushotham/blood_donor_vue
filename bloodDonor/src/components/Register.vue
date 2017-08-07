@@ -41,7 +41,7 @@
               <div class="form-group row" :class="{error: validation.hasError('donor.dob')}">
                 <label for="dob" class="col-sm-2 col-form-label col-form-label-lg">Date Of Birth</label>
                 <div class="col-sm-10 content">
-                  <datepicker class="date-picker" input-class="form-control" format="d MMM yyyy"placeholder="Date of Birth" v-model="donor.dob">
+                  <datepicker input-class="form-control date-picker" format="d MMM yyyy"placeholder="Date of Birth" v-model="donor.dob">
                   </datepicker>
                 </div>
                 <div class="message text-danger">{{ validation.firstError('donor.dob') }}</div>
