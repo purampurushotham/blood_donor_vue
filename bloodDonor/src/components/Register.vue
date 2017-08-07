@@ -165,13 +165,13 @@
         return Validator.value(value).required('Email is required').email()
       },
       'donor.p_phone': function (value) {
-        return Validator.value(value).required('Phone is required')
+        return Validator.value(value).required('Phone is required').digit('only digits').length(10)
       },
       'donor.e_email': function (value) {
         return Validator.value(value).required('Email is required').email()
       },
       'donor.e_phone': function (value) {
-        return Validator.value(value).required('Phone is required')
+        return Validator.value(value).required('Phone is required').digit('only digits').length(10)
       }
     },
     methods: {

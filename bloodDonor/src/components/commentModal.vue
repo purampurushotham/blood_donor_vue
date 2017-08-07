@@ -9,10 +9,11 @@
           <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6 ">
-              <div class="form-group row">
+              <div class="form-group row"  :class="{error: validation.hasError('comment')}">
                 <label for="comments" class="col-sm-3 col-form-label col-form-label-lg">Comment</label>
                 <div class="col-md-12">
                   <textarea type="text" class="form-control form-control-lg" id="comment" placeholder="Add comments" v-model="comment"></textarea>
+                  <span class="message text-danger">{{ validation.firstError('comment') }}</span>
                 </div>
               </div>
               <button class="btn btn-primary" @click="addComment">Save</button>
@@ -25,6 +26,7 @@
   </div>
 </template>
 <script>
+  import { Validator } from '../validator'
   let commentList = [{
     id: '',
     comments: []
@@ -42,36 +44,45 @@
     methods: {
       addComment: function () {
         console.log('add comment')
-        this.getter('postsRequests').map((eachObject, index) => {
-          if (this.postId === eachObject.id) {
-            this.setter('comments', this.comment)
-            // localStorage.setItem('comments', JSON.stringify(this.comment))
-            console.log('add comments in comment modal')
-            console.log(commentList.length, index)
-            if (!commentList[index]) {
-              commentList.push({id: '', comments: []})
-              console.log('each')
-              console.log(commentList)
-              console.log('each')
-            }
-            if (commentList[index].id === '') {
-              commentList[index].id = this.postId
-              console.log('setting comment list array id is empty')
-              commentList[index].comments.push(this.getter('comments'))
-            } else if (commentList[index].id === this.postId) {
-              console.log('setting comment list array id isnoot empty')
-              commentList[index].comments.push(this.getter('comments'))
-            }
-            console.log(commentList[index].id)
-            this.setter('comments', commentList)
+        this.$validate().then(success => {
+          if (success) {
+            this.getter('postsRequests').map((eachObject, index) => {
+              if (this.postId === eachObject.id) {
+                this.setter('comments', this.comment)
+                // localStorage.setItem('comments', JSON.stringify(this.comment))
+                console.log('add comments in comment modal')
+                console.log(commentList.length, index)
+                if (!commentList[index]) {
+                  commentList.push({id: '', comments: []})
+                  console.log('each')
+                  console.log(commentList)
+                  console.log('each')
+                }
+                if (commentList[index].id === '') {
+                  commentList[index].id = this.postId
+                  console.log('setting comment list array id is empty')
+                  commentList[index].comments.push(this.getter('comments'))
+                } else if (commentList[index].id === this.postId) {
+                  console.log('setting comment list array id isnoot empty')
+                  commentList[index].comments.push(this.getter('comments'))
+                }
+                console.log(commentList[index].id)
+                this.setter('comments', commentList)
+              }
+            })
+            this.close()
           }
         })
-        this.close()
       },
       close: function () {
         console.log('close')
         this.comm = false
         this.$emit('show-comments', this.comm)
+      }
+    },
+    validators: {
+      'comment': function (value) {
+        return Validator.value(value).required('comment is required')
       }
     }
   }
