@@ -16,7 +16,7 @@
                   <span class="message text-danger">{{ validation.firstError('comment') }}</span>
                 </div>
               </div>
-              <button class="btn btn-primary" @click="addComment">Save</button>
+              <button class="btn btn-primary" @click="addComment">Add</button>
               <button class="btn btn-danger" @click="close">Cancel</button>
             </div>
           </div>
