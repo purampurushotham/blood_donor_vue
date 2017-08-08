@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-          <button @click="loginUser" class="btn btn-success ">Submit</button>
+          <button @click="loginUser" class="btn btn-success ">Login</button>
           <button  class="btn btn-warning " @click="close">close</button>
         </form>
         <div class="modal-footer text-right">
